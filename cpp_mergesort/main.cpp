@@ -3,6 +3,8 @@
 #include <vector>
 #include <random>
 #include <thread>
+#include <fstream>
+#include <string>
 #include "hourmeter.h"
 
 #define PRINT_COUNT 100
@@ -184,6 +186,17 @@ int main(int argc, char** argv)
 
     delete[] arr;
     delete[] tempArr;
+
+    string filePath = "./result_cpp.txt";
+    ofstream writeFile(filePath.data(), std::ios_base::app);
+    if(!writeFile.is_open()){
+        cout << "file write open failed" << endl;
+        exit(0);
+    }
+
+    writeFile << hm.getLatestDuration() << endl;
+
+    writeFile.close();
 
     return 0;
 }
