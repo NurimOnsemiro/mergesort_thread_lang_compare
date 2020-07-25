@@ -1,15 +1,10 @@
 #include <iostream>
+#include <array>
+#include <vector>
 #include <random>
 #include <thread>
 #include "hourmeter.h"
 
-//INFO: 데이터 개수
-#define JOB_SIZE 1000000000
-//INFO: 데이터의 최대값
-#define MAX_VALUE 1000000
-//INFO: 사용할 스레드 개수
-#define NUM_THREADS 1
-//INFO: 결과 출력 개수
 #define PRINT_COUNT 100
 
 using namespace std;
@@ -132,8 +127,34 @@ void assignMergeSort(int* arr, const int& startPos, const int& endPos, const int
     memcpy(&arr[startPos], &tempArr[startPos], sizeof(int) * (endPos - startPos + 1));
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if(argc != 4){
+        cout << "argv : JOB_SIZE MAX_VALUE NUM_THREADS" << endl;
+        exit(0);
+    }
+
+    int jobSize = std::stoll(argv[1]);
+    int maxValue = std::stoi(argv[2]);
+    int numThreads = std::stoi(argv[3]);
+
+    if(jobSize <= 0){
+        cout << "0 < JOB_SIZE < " << INT_MAX << endl;
+        exit(0);
+    }
+
+    if(maxValue <= 0){
+        cout << "0 < MAX_VALUE < " << INT_MAX << endl;
+        exit(0);
+    }
+
+    if(numThreads <= 0){
+        cout << "0 < NUM_THREADS" << endl;
+        exit(0);
+    }
+
+    cout<< "jobSize : " << jobSize << ", maxValue : " << maxValue << ", numThreads : " << numThreads << endl;
+
     HourMeter hm;
 
     //INFO: 시드값을 얻기 위한 random_device 생성
@@ -141,23 +162,23 @@ int main()
     //INFO: random_device를 통해 난수 생성엔진을 초기화한다.
     mt19937 gen(rd());
     //INFO: 균등 분포 정의
-    uniform_int_distribution<int> dis(0, MAX_VALUE);
+    uniform_int_distribution<int> dis(0, maxValue);
 
-    arr = new int[JOB_SIZE];
-    tempArr = new int[JOB_SIZE];
+    arr = new int[jobSize];
+    tempArr = new int[jobSize];
 
-    for(int i=0;i<JOB_SIZE;i++){
+    for(int i=0;i<jobSize;i++){
         arr[i] = dis(gen);
     }
 
     cout << "assignMergeSort START" << endl;
     hm.startMeasure();
-    assignMergeSort(arr, 0, JOB_SIZE - 1, NUM_THREADS);
+    assignMergeSort(arr, 0, jobSize - 1, numThreads);
     hm.endMeasure();
     cout << "assignMergeSort END" << endl;
 
-    int term = JOB_SIZE / PRINT_COUNT;
-    for(int i = 0;i<JOB_SIZE;i += term){
+    int term = jobSize / PRINT_COUNT;
+    for(int i = 0;i<jobSize;i += term){
         cout << arr[i] << endl;
     }
 

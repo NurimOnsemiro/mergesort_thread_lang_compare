@@ -3,12 +3,10 @@
 HourMeter::HourMeter() :
     isMeasuring(false)
 {
-    printf("START HourMeter\n");
 }
 
 HourMeter::~HourMeter()
 {
-    printf("START ~HourMeter\n");
 }
 
 void HourMeter::startMeasure()
