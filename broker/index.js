@@ -11,35 +11,21 @@ let fileInfo = {
     }
 }
 
+const testCasePath = path.join(process.cwd(), './test_case.json');
+
 const numTests = 2;
 
-const testCaseList = [
-    {
-        jobSize: 100000000,
-        maxValue: 100000000,
-        numThreads: 1
-    },
-    {
-        jobSize: 100000000,
-        maxValue: 100000000,
-        numThreads: 2
-    },
-    {
-        jobSize: 100000000,
-        maxValue: 100000000,
-        numThreads: 4
-    },
-    {
-        jobSize: 100000000,
-        maxValue: 100000000,
-        numThreads: 8
-    },
-    {
-        jobSize: 100000000,
-        maxValue: 100000000,
-        numThreads: 16
+function initTestCase(){
+    if(fs.existsSync(testCasePath) === false){
+        console.error(`${testCasePath} does not exist`);
+        process.exit(0);
     }
-]
+
+    testCaseJson = JSON.parse(fs.readFileSync(testCasePath, 'utf8'));
+    testCaseList = testCaseJson.testCaseList;
+}
+
+let testCaseList = null;
 
 async function execSomeFile(filename, jobSize, maxValue, numThreads){
     return new Promise(async (resolve, reject)=>{
@@ -106,6 +92,8 @@ async function startTestLang(langInfo){
 }
 
 async function main() {
+    initTestCase();
+
     let cppResults = await startTestLang(fileInfo.cpp);
     console.log(cppResults);
 }
