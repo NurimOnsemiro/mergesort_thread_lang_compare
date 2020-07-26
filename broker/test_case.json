@@ -1,0 +1,29 @@
+{
+    "testCaseList": [
+        {
+            "jobSize": 100000000,
+            "maxValue": 100000000,
+            "numThreads": 1
+        },
+        {
+            "jobSize": 100000000,
+            "maxValue": 100000000,
+            "numThreads": 2
+        },
+        {
+            "jobSize": 100000000,
+            "maxValue": 100000000,
+            "numThreads": 4
+        },
+        {
+            "jobSize": 100000000,
+            "maxValue": 100000000,
+            "numThreads": 8
+        },
+        {
+            "jobSize": 100000000,
+            "maxValue": 100000000,
+            "numThreads": 16
+        }
+    ]
+}
