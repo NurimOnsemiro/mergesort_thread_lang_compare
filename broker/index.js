@@ -8,12 +8,16 @@ let fileInfo = {
         language: 'cpp',
         filename: 'cpp_mergesort.exe',
         result: 'result_cpp.txt'
+    },
+    golang: {
+        language: 'golang',
+        filename: 'go_mergesort.exe',
+        result: 'result_go.txt'
     }
 }
 
 const testCasePath = path.join(process.cwd(), './test_case.json');
-
-const numTests = 2;
+let numTests = 1;
 
 function initTestCase(){
     if(fs.existsSync(testCasePath) === false){
@@ -23,6 +27,10 @@ function initTestCase(){
 
     testCaseJson = JSON.parse(fs.readFileSync(testCasePath, 'utf8'));
     testCaseList = testCaseJson.testCaseList;
+    numTests = testCaseJson.numTests;
+    console.log(`numTests : ${numTests}`);
+    console.log('test case list');
+    console.log(testCaseList);
 }
 
 let testCaseList = null;
@@ -94,8 +102,15 @@ async function startTestLang(langInfo){
 async function main() {
     initTestCase();
 
-    let cppResults = await startTestLang(fileInfo.cpp);
-    console.log(cppResults);
+    let langResults = {};
+
+    for(let lang in fileInfo){
+        let results = await startTestLang(fileInfo[lang]);
+        console.log(results);
+        langResults[lang] = results;
+    }
+
+    console.log(langResults);
 }
 
 main();
