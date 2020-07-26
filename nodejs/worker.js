@@ -1,3 +1,4 @@
+//console.log('worker.js start');
 const path = require('path');
 const {
     parentPort,
@@ -211,7 +212,7 @@ async function assignMergeSort(startPos, endPos, numThreads) {
 }
 
 async function threadMain() {
-    //console.log(`#threadId : ${threadId}`);
+    console.log(`#threadId : ${threadId}`);
 
     parentPort.on('message', async (data) => {
         maxValue = data.maxValue;
