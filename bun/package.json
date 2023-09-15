@@ -1,0 +1,19 @@
+{
+    "name": "sort-sample",
+    "module": "./src/app.ts",
+    "type": "module",
+    "scripts": {
+        "start": "bun ./src/app.ts 10000000 10000000 12"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.198",
+        "bun-types": "latest",
+        "eslint": "^8.49.0"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21"
+    }
+}
